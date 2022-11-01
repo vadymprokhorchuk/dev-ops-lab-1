@@ -5,7 +5,7 @@
 ## How to run:
 - Install docker
 - Build image `sudo docker build . -t dev-ops-lab-1:latest`
-- Run container `sudo docker run -p 80:80 -m 924m --cpus=0.3 -d --env-file ./.env dev-ops-lab-1:latest`
+- Run container `sudo docker run -p 80:80 -m 924m --cpus=0.3 -d --rm --env-file ./.env dev-ops-lab-1:latest`
 
 ## Helpful commands:
 - Stop `sudo docker stop <container_id>`
