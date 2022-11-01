@@ -1,5 +1,7 @@
 # Simple node.js server
 
+> Docker hub repository [Here](https://hub.docker.com/r/vadymprokhorchuk/dev-ops-lab-1)
+
 ## How to run:
 - Install docker
 - Build image `sudo docker build . -t dev-ops-lab-1:latest`
