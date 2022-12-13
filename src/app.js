@@ -11,7 +11,7 @@ const server = http.createServer(requestListener);
 
 server.listen(port)
 
-server.on('request', (req)=>{
+server.on('request', (req, res)=>{
     console.log(`Request from ${req.connection.remoteAddress}`)
 })
 
