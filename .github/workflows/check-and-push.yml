@@ -28,3 +28,22 @@ jobs:
 
       - name: Docker push
         run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dev-ops-lab-1:latest
+
+  pull_and_run_image:
+    needs: check_and_push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Docker login
+        run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_PASSWORD}}
+
+      - name: Download image
+        run: docker pull ${{secrets.DOCKERHUB_USERNAME}}/dev-ops-lab-1
+
+      - name: Run image
+        run: docker run -p 80:80 -m 924m --cpus=0.3 -d --rm --env-file ./.env dev-ops-lab-1:latest
+
+      - name: Make request
+        run: |
+          curl -X GET "http://127.0.0.1/"
