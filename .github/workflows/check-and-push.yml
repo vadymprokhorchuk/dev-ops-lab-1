@@ -41,7 +41,10 @@ jobs:
       - name: Download image
         run: docker pull ${{secrets.DOCKERHUB_USERNAME}}/dev-ops-lab-1
 
-      - name: Run image
+      - name: Build image
+        run: docker build . -t dev-ops-lab-1:latest
+
+      - name: Run container
         run: docker run -p 80:80 -m 924m --cpus=0.3 -d --rm --env-file ./.env dev-ops-lab-1:latest
 
       - name: Make request
