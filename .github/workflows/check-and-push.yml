@@ -1,36 +1,29 @@
 name: Check code & push to Docker Hub
 on: push
 jobs:
-  init:
+  check_and_push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+
+      - name: Init
         with:
           node-version: 16
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-      - run: npm ci
+        run: npm ci
+
       - name: Check code
         run: npm run lint
 
-  build:
-    needs: init
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
       - name: Build image
         run: docker build . -t dev-ops-lab-1:latest
 
-  push:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Docker push
+      - name: Push image
         env:
           DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
           DOCKERHUB_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
-        run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-      - name: Docker push
-        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dev-ops-lab-1:latest
+        run: |
+          docker build . -t dev-ops-lab-1:latest
+          docker push ${{secrets.DOCKERHUB_USERNAME}}/dev-ops-lab-1:latest
