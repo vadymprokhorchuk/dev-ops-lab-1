@@ -3,5 +3,5 @@ WORKDIR /opt
 COPY package*.json ./
 RUN npm i
 COPY . .
-EXPOSE $PORT
-CMD PORT=$PORT node ./src/app.js
+EXPOSE 3000
+CMD ["node", "app.js"]
